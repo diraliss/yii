@@ -13,8 +13,8 @@ class Map extends \yii\bootstrap\Widget
 {
     public $latitude = '39.9473463';
     public $longitude = '57.6578903';
-    public $width = 400;
-    public $height = 400;
+    public $width = '100%';
+    public $height = '400';
     public $allowfullscreen = true;
 
     public function run()

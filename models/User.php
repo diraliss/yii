@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -70,9 +71,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'password'], 'required'],
+            ['username', 'email'],
             [['authKey', 'accessToken'], 'string'],
             [['username'], 'string', 'max' => 100],
-            [['password'], 'string', 'max' => 20],
+            [['password'], 'string', 'max' => 100],
         ];
     }
 
@@ -83,7 +85,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
+            'username' => 'E-mail',
             'password' => 'Password',
             'authKey' => 'Auth Key',
             'accessToken' => 'Access Token',
@@ -122,6 +124,19 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return $this->password === mb_substr(md5($password), 0, 100);
+    }
+
+    /**
+     *
+     * @param User $user
+     * @return User
+     * @throws \yii\base\Exception
+     */
+    static function addSecurityKeys($user) {
+        $user->password = md5($user->password);
+        $user->authKey = Yii::$app->security->generateRandomString();
+        $user->accessToken = Yii::$app->security->generateRandomString();
+        return $user;
     }
 }

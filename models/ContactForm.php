@@ -15,6 +15,10 @@ class ContactForm extends Model
     public $subject;
     public $body;
     public $verifyCode;
+    public $date;
+
+    const EVENT_CONTACT_START = 'EVENT_CONTACT_START';
+    const EVENT_CONTACT_END = 'EVENT_CONTACT_END';
 
 
     /**
@@ -23,11 +27,9 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-            // name, email, subject and body are required
             [['name', 'email', 'subject', 'body'], 'required'],
-            // email has to be a valid email address
             ['email', 'email'],
-            // verifyCode needs to be entered correctly
+            ['date', 'safe'],
             ['verifyCode', 'captcha'],
         ];
     }
@@ -50,6 +52,7 @@ class ContactForm extends Model
     public function contact($email)
     {
         if ($this->validate()) {
+            $this->trigger(static::EVENT_CONTACT_START);
             Yii::$app->mailer->compose()
                 ->setTo($email)
                 ->setFrom([$this->email => $this->name])
@@ -57,6 +60,7 @@ class ContactForm extends Model
                 ->setTextBody($this->body)
                 ->send();
 
+            $this->trigger(static::EVENT_CONTACT_END);
             return true;
         }
 

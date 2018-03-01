@@ -43,8 +43,8 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
                 ['label' => 'Главная', 'url' => ['/site/index']],
-                ['label' => 'Callback', 'url' => ['/site/contact']],
-                Yii::$app->user->isGuest ? ('') : ['label' => 'Админпанель', 'url' => ['/product/index']],
+                Yii::$app->user->isGuest ? ('') : ['label' => 'Админка', 'url' => ['/product/index']],
+                ['label' => 'Обратная связь', 'url' => ['/site/contact']],
                 Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
                 ) : (
