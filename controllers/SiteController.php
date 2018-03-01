@@ -2,9 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Product;
+use app\models\ProductSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -61,7 +64,32 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * @param string $id
+     * @param bool $singlePage
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDetails($id, $singlePage = false)
+    {
+        if (($model = Product::findOne($id)) !== null) {
+            return $this->render('card', [
+                'model' => $model,
+                'singlePage' => $singlePage,
+            ]);
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+
+
     }
 
     /**
