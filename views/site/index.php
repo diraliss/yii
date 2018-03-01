@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use \yii\widgets\ListView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'col-sm-4',
             ],
             'viewParams' => [
-                'singlePage' => false
+                'singlePage' => false,
             ],
         ]
     ) ?>

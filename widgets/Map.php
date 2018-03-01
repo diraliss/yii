@@ -19,12 +19,15 @@ class Map extends \yii\bootstrap\Widget
 
     public function run()
     {
-        return $this->render('map', [
-            'allowfullscreen' => $this->allowfullscreen,
-            'latitude' => $this->latitude,
-            'width' => $this->width,
-            'longitude' => $this->longitude,
-            'height' => $this->height
-        ]);
+        return $this->render(
+            'map',
+            [
+                'allowfullscreen' => $this->allowfullscreen,
+                'latitude' => $this->latitude,
+                'width' => $this->width,
+                'longitude' => $this->longitude,
+                'height' => $this->height,
+            ]
+        );
     }
 }

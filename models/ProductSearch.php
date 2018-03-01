@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Product;
 
 /**
  * ProductSearch represents the model behind the search form of `app\models\Product`.
@@ -45,9 +43,11 @@ class ProductSearch extends Product
 
         // add conditions that should always apply here
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $dataProvider = new ActiveDataProvider(
+            [
+                'query' => $query,
+            ]
+        );
 
         $this->load($params);
 
@@ -58,10 +58,12 @@ class ProductSearch extends Product
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'price' => $this->price,
-        ]);
+        $query->andFilterWhere(
+            [
+                'id' => $this->id,
+                'price' => $this->price,
+            ]
+        );
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description]);

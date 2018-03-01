@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Category;
 
 /**
  * CategorySearch represents the model behind the search form of `app\models\Category`.
@@ -45,9 +43,11 @@ class CategorySearch extends Category
 
         // add conditions that should always apply here
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $dataProvider = new ActiveDataProvider(
+            [
+                'query' => $query,
+            ]
+        );
 
         $this->load($params);
 
@@ -58,9 +58,11 @@ class CategorySearch extends Category
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
+        $query->andFilterWhere(
+            [
+                'id' => $this->id,
+            ]
+        );
 
         $query->andFilterWhere(['like', 'name', $this->name]);
 

@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "{{app_user}}".
@@ -13,8 +14,7 @@ use Yii;
  * @property string $authKey
  * @property string $accessToken
  */
-
-class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
+class User extends ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -22,6 +22,45 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function tableName()
     {
         return '{{app_user}}';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentity($id)
+    {
+        if ($user = self::findOne($id)) {
+            return $user;
+        }
+
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        if ($user = self::findOne(['accessToken' => $token])) {
+            return $user;
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds user by username
+     *
+     * @param string $username
+     * @return static|null
+     */
+    public static function findByUsername($username)
+    {
+        if ($user = self::findOne(['username' => $username])) {
+            return $user;
+        }
+
+        return null;
     }
 
     /**
@@ -49,45 +88,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'authKey' => 'Auth Key',
             'accessToken' => 'Access Token',
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
-    {
-        $user = self::findOne($id);
-        if ($user) {
-            return new static($user->attributes);
-        }
-        return null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        $user = self::findOne(['accessToken' => $token]);
-        if ($user) {
-            return new static($user->attributes);
-        }
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        $user = self::findOne(['username' => $username]);
-        if ($user) {
-            return new static($user->attributes);
-        }
-        return null;
     }
 
     /**
