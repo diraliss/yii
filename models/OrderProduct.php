@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%app_order_product}}".
+ * This is the model class for table "{{app_order_product}}".
  *
  * @property string $id
  * @property string $order_id
@@ -19,7 +19,7 @@ class OrderProduct extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%app_order_product}}';
+        return '{{app_order_product}}';
     }
 
     /**

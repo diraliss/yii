@@ -65,4 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     <?php endif; ?>
+
+    <?=\app\widgets\Map::widget()?>
 </div>
