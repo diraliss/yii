@@ -49,4 +49,14 @@ class Notification extends \yii\db\ActiveRecord
         $notif = new static(['email' => $user->username]);
         $notif->save();
     }
+
+    /**
+     * @param string $email
+     */
+    static function addEmailToNotificationList($email) {
+        if (!(self::findOne(['email' => $email]))) {
+            $notif = new static(['email' => $email]);
+            $notif->save();
+        }
+    }
 }

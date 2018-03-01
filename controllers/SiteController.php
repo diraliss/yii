@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\ContactForm;
 use app\models\LoginForm;
+use app\models\Notification;
 use app\models\Product;
 use app\models\ProductSearch;
 use Yii;
@@ -142,6 +143,13 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
+        $model->on(
+            ContactForm::EVENT_CONTACT_START,
+            function ($event) {
+                Notification::addEmailToNotificationList($event->email);
+            }
+        );
+
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
 

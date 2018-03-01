@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\events\ContactEvent;
 use Yii;
 use yii\base\Model;
 
@@ -52,7 +53,7 @@ class ContactForm extends Model
     public function contact($email)
     {
         if ($this->validate()) {
-            $this->trigger(static::EVENT_CONTACT_START);
+            $this->trigger(static::EVENT_CONTACT_START, new ContactEvent(['email' => $email]));
             Yii::$app->mailer->compose()
                 ->setTo($email)
                 ->setFrom([$this->email => $this->name])
