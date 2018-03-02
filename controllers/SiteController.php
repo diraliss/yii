@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\actions\HelloAction;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use app\models\Notification;
@@ -55,6 +56,10 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'hello' => [
+                'class' => HelloAction::className(),
+                'name' => 'Mashs'
+            ]
         ];
     }
 
@@ -95,8 +100,6 @@ class SiteController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-
-
     }
 
     /**
