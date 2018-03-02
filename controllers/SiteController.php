@@ -146,16 +146,8 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
-        $model->on(
-            ContactForm::EVENT_CONTACT_START,
-            function ($event) {
-                Notification::addEmailToNotificationList($event->email);
-            }
-        );
-
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-
             return $this->refresh();
         }
 

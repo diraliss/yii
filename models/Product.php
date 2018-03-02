@@ -2,6 +2,10 @@
 
 namespace app\models;
 
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
+
 /**
  * This is the model class for table "{{app_product}}".
  *
@@ -9,8 +13,10 @@ namespace app\models;
  * @property string $name
  * @property string $description
  * @property string $price
+ * @property int $created_at [timestamp]
+ * @property int $updated_at [timestamp]
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -18,6 +24,16 @@ class Product extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return '{{app_product}}';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'value' => new Expression('NOW()'),
+            ],
+        ];
     }
 
     /**

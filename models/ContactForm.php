@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\behaviors\AddToNotificationListBehavior;
 use app\events\ContactEvent;
 use Yii;
 use yii\base\Model;
@@ -35,6 +36,13 @@ class ContactForm extends Model
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            AddToNotificationListBehavior::className()
+        ];
+    }
+
     /**
      * @return array customized attribute labels
      */
@@ -53,7 +61,7 @@ class ContactForm extends Model
     public function contact($email)
     {
         if ($this->validate()) {
-            $this->trigger(static::EVENT_CONTACT_START, new ContactEvent(['email' => $email]));
+            $this->trigger(static::EVENT_CONTACT_START, new ContactEvent(['email' => $this->email]));
             Yii::$app->mailer->compose()
                 ->setTo($email)
                 ->setFrom([$this->email => $this->name])

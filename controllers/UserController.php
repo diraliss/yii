@@ -23,17 +23,9 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-        $afterEvent = function ($event) {
-            Notification::addUserToNotificationList($event->sender);
-        };
         $beforeEvent = function ($event) {
             User::addSecurityKeys($event->sender);
         };
-
-        $model->on(
-            User::EVENT_AFTER_INSERT,
-            $afterEvent
-        );
         $model->on(
             User::EVENT_BEFORE_INSERT,
             $beforeEvent
@@ -42,11 +34,6 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->user->login($model);
-
-            $model->off(
-                User::EVENT_AFTER_INSERT,
-                $afterEvent
-            );
             $model->off(
                 User::EVENT_BEFORE_INSERT,
                 $beforeEvent

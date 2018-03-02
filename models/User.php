@@ -2,8 +2,11 @@
 
 namespace app\models;
 
+use app\behaviors\AddToNotificationListBehavior;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\web\IdentityInterface;
 
 /**
@@ -14,6 +17,8 @@ use yii\web\IdentityInterface;
  * @property string $password
  * @property string $authKey
  * @property string $accessToken
+ * @property int $created_at [timestamp]
+ * @property int $updated_at [timestamp]
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -75,6 +80,17 @@ class User extends ActiveRecord implements IdentityInterface
             [['authKey', 'accessToken'], 'string'],
             [['username'], 'string', 'max' => 100],
             [['password'], 'string', 'max' => 100],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            AddToNotificationListBehavior::className(),
+            [
+                'class' => TimestampBehavior::className(),
+                'value' => new Expression('NOW()'),
+            ],
         ];
     }
 
