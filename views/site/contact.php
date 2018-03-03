@@ -65,7 +65,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
         <div class="col-lg-6">
-            <?= Map::widget() ?>
+            <?php
+            $key = 'map';
+            if ($this->beginCache(
+                $key,
+                [
+                    'duration' => 12 * 60,
+//                    'dependency' => '',
+                    'variations' => [Yii::$app->language],
+//                    'enabled' => false,
+                ]
+            )) {
+                // кэшируется строка statements
+                echo $this->renderDynamic('return "Current user: " . Yii::$app->user->identity->username;');
+                echo Map::widget();
+                $this->endCache();
+            }
+            ?>
         </div>
     </div>
 </div>

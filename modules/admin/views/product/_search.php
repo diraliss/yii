@@ -10,12 +10,10 @@ use yii\widgets\ActiveForm;
 
 <div class="product-search">
 
-    <?php $form = ActiveForm::begin(
-        [
-            'action' => ['index'],
-            'method' => 'get',
-        ]
-    ); ?>
+    <?php $form = ActiveForm::begin([
+        'action' => ['index'],
+        'method' => 'get',
+    ]); ?>
 
     <?= $form->field($model, 'id') ?>
 
@@ -24,6 +22,12 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'description') ?>
 
     <?= $form->field($model, 'price') ?>
+
+    <?= $form->field($model, 'created_at') ?>
+
+    <?php // echo $form->field($model, 'updated_at') ?>
+
+    <?php // echo $form->field($model, 'category_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

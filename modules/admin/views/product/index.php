@@ -1,7 +1,7 @@
 <?php
 
-use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProductSearch */
@@ -19,20 +19,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget(
-        [
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
 
-                'id',
-                'name',
-                'description:ntext',
-                'price',
+            'id',
+            'name',
+            'description:ntext',
+            'price',
+            'created_at',
+            //'updated_at',
+            //'category_id',
 
-                ['class' => 'yii\grid\ActionColumn'],
-            ],
-        ]
-    ); ?>
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
 </div>

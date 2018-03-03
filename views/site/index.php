@@ -5,8 +5,13 @@ use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $category \app\models\Category */
 
-$this->title = 'Каталог';
+if ($category) {
+    $this->title = $category->name;
+} else {
+    $this->title = 'Каталог';
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-index">

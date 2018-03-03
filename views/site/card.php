@@ -15,7 +15,11 @@ if ($singlePage) {
 <div><?= $model->name ?></div>
 <div class="card-body">
     <h6><?= $model->price ?> ₽</h6>
-    <p><?= $model->description ?></p>
+    <?php if ($singlePage): ?>
+        <p><?= $model->description ?></p>
+    <?php else: ?>
+        <p><?= mb_strcut($model->description, 0, 100) . "..." ?></p>
+    <?php endif; ?>
     <?php if (!$singlePage): ?>
         <?= Html::a(
             'Подробнее',

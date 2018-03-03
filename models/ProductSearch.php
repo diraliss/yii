@@ -16,8 +16,8 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'price'], 'integer'],
-            [['name', 'description'], 'safe'],
+            [['id', 'price', 'category_id'], 'integer'],
+            [['name', 'description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -46,10 +46,13 @@ class ProductSearch extends Product
         $dataProvider = new ActiveDataProvider(
             [
                 'query' => $query,
+                'pagination' => [
+                    'defaultPageSize' => 3
+                ]
             ]
         );
 
-        $this->load($params);
+        $this->setAttributes($params);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -62,6 +65,9 @@ class ProductSearch extends Product
             [
                 'id' => $this->id,
                 'price' => $this->price,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'category_id' => $this->category_id,
             ]
         );
 

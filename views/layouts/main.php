@@ -29,6 +29,12 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+    $categories = \app\models\Category::find()->all();
+    $categoriesList = [];
+    foreach ($categories as $category) {
+        $categoriesList[] = ['label' => $category->name, 'url' => ['/site/category', 'id' => $category->id]];
+    }
+
     NavBar::begin(
         [
             'brandLabel' => Yii::$app->name,
@@ -43,6 +49,10 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
                 ['label' => 'Главная', 'url' => ['/site/index']],
+                [
+                    'label' => 'Категории',
+                    'items' => $categoriesList,
+                ],
                 Yii::$app->user->isGuest ? ('') : ['label' => 'Админка', 'url' => ['admin/product/index']],
                 ['label' => 'Обратная связь', 'url' => ['/site/contact']],
                 Yii::$app->user->isGuest ? (

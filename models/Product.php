@@ -7,14 +7,17 @@ use yii\db\ActiveRecord;
 use yii\db\Expression;
 
 /**
- * This is the model class for table "{{app_product}}".
+ * This is the model class for table "app_product".
  *
  * @property string $id
  * @property string $name
  * @property string $description
  * @property string $price
- * @property int $created_at [timestamp]
- * @property int $updated_at [timestamp]
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $category_id
+ *
+ * @property Category $category
  */
 class Product extends ActiveRecord
 {
@@ -23,7 +26,7 @@ class Product extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{app_product}}';
+        return 'app_product';
     }
 
     public function behaviors()
@@ -44,8 +47,16 @@ class Product extends ActiveRecord
         return [
             [['name', 'description', 'price'], 'required'],
             [['description'], 'string'],
-            [['price'], 'integer'],
+            [['price', 'category_id'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 100],
+            [
+                ['category_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Category::className(),
+                'targetAttribute' => ['category_id' => 'id'],
+            ],
         ];
     }
 
@@ -59,6 +70,17 @@ class Product extends ActiveRecord
             'name' => 'Name',
             'description' => 'Description',
             'price' => 'Price',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'category_id' => 'Category ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 }

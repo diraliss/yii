@@ -3,13 +3,15 @@
 namespace app\controllers;
 
 use app\actions\HelloAction;
+use app\models\Category;
 use app\models\ContactForm;
 use app\models\LoginForm;
-use app\models\Notification;
 use app\models\Product;
 use app\models\ProductSearch;
 use Yii;
+use yii\caching\DbDependency;
 use yii\filters\AccessControl;
+use yii\filters\PageCache;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -40,6 +42,26 @@ class SiteController extends Controller
                     'logout' => ['post'],
                 ],
             ],
+            [
+                'class' => PageCache::className(),
+                'only' => [
+                    'about',
+                ],
+                'duration' => 12 * 60,
+                'variations' => Yii::$app->language,
+            ],
+            [
+                'class' => PageCache::className(),
+                'only' => [
+                    'index',
+                ],
+                'duration' => 12 * 60,
+                'variations' => Yii::$app->request->get('page'),
+                'dependency' => [
+                    'class' => DbDependency::className(),
+                    'sql' => 'SELECT COUNT(*) FROM app_product',
+                ],
+            ],
         ];
     }
 
@@ -58,8 +80,8 @@ class SiteController extends Controller
             ],
             'hello' => [
                 'class' => HelloAction::className(),
-                'name' => 'Mashs'
-            ]
+                'name' => 'Masha',
+            ],
         ];
     }
 
@@ -77,6 +99,7 @@ class SiteController extends Controller
             'index',
             [
                 'dataProvider' => $dataProvider,
+                'category' => null,
             ]
         );
     }
@@ -85,16 +108,72 @@ class SiteController extends Controller
      * @param string $id
      * @param bool $singlePage
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
      */
     public function actionDetails($id, $singlePage = false)
     {
-        if (($model = Product::findOne($id)) !== null) {
+        $cache = Yii::$app->cache;
+        $key = "product_{$id}";
+        $dependency = new DbDependency();
+        $dependency->sql = "SELECT updated_at FROM app_product WHERE id = {$id}";
+
+        if (!($model = $cache->get($key))) {
+            $model = Product::findOne($id);
+            $cache->set($key, $model, 6 * 60 * 60, $dependency);
+        }
+
+        if ($model !== null) {
             return $this->render(
                 'card',
                 [
                     'model' => $model,
                     'singlePage' => $singlePage,
+                ]
+            );
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionCategory($id)
+    {
+        $cache = Yii::$app->cache;
+        $key = "category_{$id}";
+        $dependency = new DbDependency();
+        $dependency->sql = "SELECT COUNT(*) FROM app_product WHERE category_id = {$id}";
+
+        if (!($content = $cache->get($key))) {
+            $searchModel = new ProductSearch();
+            $params = Yii::$app->request->queryParams;
+            $params['id'] = null;
+            $params['category_id'] = (int)$id;
+            $dataProvider = $searchModel->search($params);
+            $category = Category::findOne($id);
+
+            $content = [
+                'dataProvider' => $dataProvider,
+                'category' => $category,
+            ];
+
+            $cache->set(
+                $key,
+                $content,
+                12 * 60 * 60,
+                $dependency
+            );
+        }
+
+        if ($content['category'] !== null) {
+            return $this->render(
+                'index',
+                [
+                    'dataProvider' => $content['dataProvider'],
+                    'category' => $content['category'],
                 ]
             );
         }
@@ -148,6 +227,7 @@ class SiteController extends Controller
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
+
             return $this->refresh();
         }
 
@@ -157,5 +237,15 @@ class SiteController extends Controller
                 'model' => $model,
             ]
         );
+    }
+
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionAbout()
+    {
+        return $this->render('about');
     }
 }
