@@ -43,8 +43,8 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
                 ['label' => 'Главная', 'url' => ['/site/index']],
-                ['label' => 'Products', 'url' => ['/product/index']],
-                ['label' => 'Categories', 'url' => ['/category/index']],
+                ['label' => 'Products', 'url' => ['product/index']],
+                ['label' => 'Categories', 'url' => ['category/index']],
             ],
         ]
     );
