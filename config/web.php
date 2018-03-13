@@ -11,7 +11,8 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
-        '@modules' => '@app/modules',
+        '@modules' => '@vendor\modules',
+        '@prices' => '@vendor\web\prices.csv',
     ],
     'components' => [
         'i18n' => [
