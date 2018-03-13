@@ -55,13 +55,14 @@ AppAsset::register($this);
                 ],
                 Yii::$app->user->isGuest ? ('') : ['label' => Yii::t('app_menu', 'admin'), 'url' => ['admin/product/index']],
                 ['label' => Yii::t('app_menu', 'callback'), 'url' => ['/site/contact']],
+                ['label' => Yii::t('app_menu', 'about'), 'url' => ['/site/about']],
                 Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => Yii::t('app_menu', 'login'), 'url' => ['/site/login']]
                 ) : (
                     '<li>'
                     .Html::beginForm(['/site/logout'], 'post')
                     .Html::submitButton(
-                        'Logout ('.Yii::$app->user->identity->username.')',
+                        Yii::t('app_menu', 'logout').' ('.Yii::$app->user->identity->username.')',
                         ['class' => 'btn btn-link logout']
                     )
                     .Html::endForm()
