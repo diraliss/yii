@@ -48,13 +48,13 @@ AppAsset::register($this);
         [
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-                ['label' => 'Главная', 'url' => ['/site/index']],
+                ['label' => Yii::t('app_menu', 'main'), 'url' => ['/site/index']],
                 [
-                    'label' => 'Категории',
+                    'label' => Yii::t('app_menu', 'categories'),
                     'items' => $categoriesList,
                 ],
-                Yii::$app->user->isGuest ? ('') : ['label' => 'Админка', 'url' => ['admin/product/index']],
-                ['label' => 'Обратная связь', 'url' => ['/site/contact']],
+                Yii::$app->user->isGuest ? ('') : ['label' => Yii::t('app_menu', 'admin'), 'url' => ['admin/product/index']],
+                ['label' => Yii::t('app_menu', 'callback'), 'url' => ['/site/contact']],
                 Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
                 ) : (

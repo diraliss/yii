@@ -56,7 +56,10 @@ class SiteController extends Controller
                     'index',
                 ],
                 'duration' => 12 * 60,
-                'variations' => Yii::$app->request->get('page'),
+                'variations' => [
+                    Yii::$app->request->get('page'),
+                    Yii::$app->language
+                ],
                 'dependency' => [
                     'class' => DbDependency::className(),
                     'sql' => 'SELECT COUNT(*) FROM app_product',
