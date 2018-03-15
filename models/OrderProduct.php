@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -33,8 +32,20 @@ class OrderProduct extends ActiveRecord
     {
         return [
             [['product_count', 'order_id', 'product_id'], 'integer'],
-            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::className(), 'targetAttribute' => ['order_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [
+                ['order_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Order::className(),
+                'targetAttribute' => ['order_id' => 'id'],
+            ],
+            [
+                ['product_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Product::className(),
+                'targetAttribute' => ['product_id' => 'id'],
+            ],
         ];
     }
 

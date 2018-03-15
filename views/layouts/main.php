@@ -53,7 +53,10 @@ AppAsset::register($this);
                     'label' => Yii::t('app_menu', 'categories'),
                     'items' => $categoriesList,
                 ],
-                Yii::$app->user->isGuest ? ('') : ['label' => Yii::t('app_menu', 'admin'), 'url' => ['admin/product/index']],
+                Yii::$app->user->isGuest ? ('') : [
+                    'label' => Yii::t('app_menu', 'admin'),
+                    'url' => ['admin/product/index'],
+                ],
                 ['label' => Yii::t('app_menu', 'callback'), 'url' => ['/site/contact']],
                 ['label' => Yii::t('app_menu', 'about'), 'url' => ['/site/about']],
                 Yii::$app->user->isGuest ? (

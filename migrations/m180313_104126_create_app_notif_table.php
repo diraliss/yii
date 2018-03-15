@@ -12,10 +12,13 @@ class m180313_104126_create_app_notif_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('app_notif', [
-            'id' => $this->primaryKey(),
-            'email' => $this->string(),
-        ]);
+        $this->createTable(
+            'app_notif',
+            [
+                'id' => $this->primaryKey(),
+                'email' => $this->string(),
+            ]
+        );
     }
 
     /**

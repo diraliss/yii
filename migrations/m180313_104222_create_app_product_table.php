@@ -12,15 +12,18 @@ class m180313_104222_create_app_product_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('app_product', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string(),
-            'description' => $this->text(),
-            'price' => $this->smallInteger(),
-            'category_id' => $this->integer(11),
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
-        ]);
+        $this->createTable(
+            'app_product',
+            [
+                'id' => $this->primaryKey(),
+                'name' => $this->string(),
+                'description' => $this->text(),
+                'price' => $this->smallInteger(),
+                'category_id' => $this->integer(11),
+                'created_at' => $this->timestamp(),
+                'updated_at' => $this->timestamp(),
+            ]
+        );
     }
 
     /**

@@ -77,7 +77,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             )) {
                 // кэшируется строка statements
-                echo $this->renderDynamic('if (!Yii::$app->user->isGuest) { return "Current user: " . Yii::$app->user->identity->username; } else { return ""; }');
+                echo $this->renderDynamic(
+                    'if (!Yii::$app->user->isGuest) { return "Current user: " . Yii::$app->user->identity->username; } else { return ""; }'
+                );
                 echo Map::widget();
                 $this->endCache();
             }

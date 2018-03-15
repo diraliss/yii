@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -49,7 +48,13 @@ class ProductImage extends ActiveRecord
             [['created_at', 'updated_at'], 'safe'],
             [['url'], 'string', 'max' => 255],
             [['is_title'], 'string', 'max' => 1],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [
+                ['product_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Product::className(),
+                'targetAttribute' => ['product_id' => 'id'],
+            ],
         ];
     }
 

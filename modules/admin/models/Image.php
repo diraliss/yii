@@ -25,6 +25,7 @@ class Image extends Model
 
         if ($this->validate()) {
             $this->attachment->saveAs("{$fileName}.{$this->attachment->extension}");
+
             return true;
         } else {
             return false;

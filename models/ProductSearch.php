@@ -47,8 +47,8 @@ class ProductSearch extends Product
             [
                 'query' => $query,
                 'pagination' => [
-                    'defaultPageSize' => 3
-                ]
+                    'defaultPageSize' => 3,
+                ],
             ]
         );
 

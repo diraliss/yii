@@ -12,10 +12,13 @@ class m180313_104056_create_app_category_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('app_category', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string(100),
-        ]);
+        $this->createTable(
+            'app_category',
+            [
+                'id' => $this->primaryKey(),
+                'name' => $this->string(100),
+            ]
+        );
     }
 
     /**

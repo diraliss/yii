@@ -18,7 +18,7 @@ if ($singlePage) {
     <?php if ($singlePage): ?>
         <p><?= $model->description ?></p>
     <?php else: ?>
-        <p><?= mb_strcut($model->description, 0, 100) . "..." ?></p>
+        <p><?= mb_strcut($model->description, 0, 100)."..." ?></p>
     <?php endif; ?>
     <?php if (!$singlePage): ?>
         <?= Html::a(

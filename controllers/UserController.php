@@ -9,7 +9,6 @@
 namespace app\controllers;
 
 
-use app\models\Notification;
 use app\models\User;
 use Yii;
 use yii\web\Controller;

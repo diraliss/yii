@@ -12,16 +12,14 @@ use yii\base\Model;
  */
 class ContactForm extends Model
 {
+    const EVENT_CONTACT_START = 'EVENT_CONTACT_START';
+    const EVENT_CONTACT_END = 'EVENT_CONTACT_END';
     public $name;
     public $email;
     public $subject;
     public $body;
     public $verifyCode;
     public $date;
-
-    const EVENT_CONTACT_START = 'EVENT_CONTACT_START';
-    const EVENT_CONTACT_END = 'EVENT_CONTACT_END';
-
 
     /**
      * @return array the validation rules.
@@ -39,7 +37,7 @@ class ContactForm extends Model
     public function behaviors()
     {
         return [
-            AddToNotificationListBehavior::className()
+            AddToNotificationListBehavior::className(),
         ];
     }
 
@@ -70,6 +68,7 @@ class ContactForm extends Model
                 ->send();
 
             $this->trigger(static::EVENT_CONTACT_END);
+
             return true;
         }
 

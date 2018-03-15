@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ); ?>
 
-        <?= $form->field($image, 'attachment')->fileInput()?>
+        <?= $form->field($image, 'attachment')->fileInput() ?>
 
         <?= $form->field($model, 'is_title')->textInput() ?>
 

@@ -5,11 +5,8 @@
 
 /* @var $model app\models\User */
 
-use app\widgets\Map;
 use yii\bootstrap\ActiveForm;
-use yii\captcha\Captcha;
 use yii\helpers\Html;
-use yii\jui\DatePicker;
 
 $this->title = 'Регистрация';
 $this->params['breadcrumbs'][] = $this->title;

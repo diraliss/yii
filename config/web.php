@@ -1,7 +1,7 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
+$params = require __DIR__.'/params.php';
+$db = require __DIR__.'/db.php';
 
 $config = [
     'id' => 'basic',
@@ -10,16 +10,19 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
+        'authManager' => [
+            'class' => \yii\rbac\DbManager::className(),
+        ],
         'i18n' => [
             'translations' => [
                 'app*' => [
                     'class' => \yii\i18n\PhpMessageSource::className(),
-                    'basePath' => '@app/messages'
-                ]
-            ]
+                    'basePath' => '@app/messages',
+                ],
+            ],
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation

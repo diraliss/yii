@@ -45,5 +45,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php ActiveForm::end(); ?>
 
-    <?= Html::a('Registration', ['user/create'])?>
+    <?= Html::a('Registration', ['user/create']) ?>
 </div>

@@ -70,6 +70,21 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     *
+     * @param User $user
+     * @return User
+     * @throws \yii\base\Exception
+     */
+    static function addSecurityKeys($user)
+    {
+        $user->password = md5($user->password);
+        $user->authKey = Yii::$app->security->generateRandomString();
+        $user->accessToken = Yii::$app->security->generateRandomString();
+
+        return $user;
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -141,18 +156,5 @@ class User extends ActiveRecord implements IdentityInterface
     public function validatePassword($password)
     {
         return $this->password === mb_substr(md5($password), 0, 100);
-    }
-
-    /**
-     *
-     * @param User $user
-     * @return User
-     * @throws \yii\base\Exception
-     */
-    static function addSecurityKeys($user) {
-        $user->password = md5($user->password);
-        $user->authKey = Yii::$app->security->generateRandomString();
-        $user->accessToken = Yii::$app->security->generateRandomString();
-        return $user;
     }
 }
