@@ -48,7 +48,10 @@ class SiteController extends Controller
                     'about',
                 ],
                 'duration' => 12 * 60,
-                'variations' => Yii::$app->language,
+                'variations' => [
+                    Yii::$app->language,
+                    Yii::$app->user,
+                ],
             ],
             [
                 'class' => PageCache::className(),
@@ -59,6 +62,7 @@ class SiteController extends Controller
                 'variations' => [
                     Yii::$app->request->get('page'),
                     Yii::$app->language,
+                    Yii::$app->user,
                 ],
                 'dependency' => [
                     'class' => DbDependency::className(),
